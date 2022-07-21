@@ -26,11 +26,9 @@ export const testComponents: ComponentData[] = [
     name: 'l-text',
     props: {
       text: 'hello2',
-      fontSize: '10px',
+      fontSize: '15px',
       fontWeight: 'bold',
-      lineHeight: '2',
-      textAlign: 'left',
-      fontFamily: ''
+      color: 'red'
     }
   },
   {
@@ -42,10 +40,7 @@ export const testComponents: ComponentData[] = [
       actionType: 'url',
       url: 'https://www.baidu.com',
       lineHeight: '3',
-      textAlign: 'left',
-      fontFamily: '',
-      isEditing: true,
-      cursor: 'pointer'
+      color: 'green'
     }
   }
 ]

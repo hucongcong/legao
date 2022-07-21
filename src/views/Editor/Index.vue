@@ -1,5 +1,22 @@
-<script lang="ts" setup>
+<script lang="ts">
 import ComponentList from './components/ComponentList.vue'
+import useStore from '@/store'
+import LText from '@/components/LText.vue'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Editor',
+  components: {
+    LText,
+    ComponentList
+  },
+  setup() {
+    const { editor } = useStore()
+    return {
+      editor
+    }
+  }
+})
 </script>
 
 <template>
@@ -14,7 +31,14 @@ import ComponentList from './components/ComponentList.vue'
       <a-layout style="padding: 0 24px 24px">
         <a-layout-content class="preview-container">
           <p>画布区域</p>
-          <div class="preview-list" id="canvas-area"></div>
+          <div class="preview-list" id="canvas-area">
+            <component
+              v-for="item in editor.components"
+              :key="item.id"
+              :is="item.name"
+              v-bind="item.props"
+            ></component>
+          </div>
         </a-layout-content>
       </a-layout>
       <a-layout-sider

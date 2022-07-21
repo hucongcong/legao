@@ -1,12 +1,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { pick } from 'lodash-es'
+// 获取文本组件所有的props
 import {
-  transfromToComponentProps,
   textDefaultProps,
-  textStylePropNames
+  textStylePropNames,
+  transfromToComponentProps
 } from '@/config/defaultProps'
-import { computed } from '@vue/reactivity'
+import useComponentCommon from '@/hooks/useComponentCommon'
+
+// 获取文本组件的默认props
 const defaultProps = transfromToComponentProps(textDefaultProps)
 export default defineComponent({
   name: 'LText',
@@ -18,11 +20,13 @@ export default defineComponent({
     ...defaultProps
   },
   setup(props) {
-    const styleProps = computed(() => {
-      return pick(props, textStylePropNames)
-    })
+    const { styleProps, handleClick } = useComponentCommon(
+      props,
+      textStylePropNames
+    )
     return {
-      styleProps
+      styleProps,
+      handleClick
     }
   }
 })
@@ -31,9 +35,14 @@ export default defineComponent({
 <template>
   <div class="l-text">
     <!-- 文本组件 -->
-    <component :is="tag" class="l-text-component" :style="styleProps">{{
-      text
-    }}</component>
+    <component
+      :is="tag"
+      class="l-text-component"
+      :style="styleProps"
+      @click="handleClick"
+    >
+      {{ text }}
+    </component>
   </div>
 </template>
 
