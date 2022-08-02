@@ -87,7 +87,7 @@ export const textDefaultProps: TextComponentProps = {
 export const transfromToComponentProps = (props: TextComponentProps) => {
   return mapValues(props, (item) => {
     return {
-      type: item.constructor,
+      type: item.constructor as StringConstructor,
       default: item
     }
   })

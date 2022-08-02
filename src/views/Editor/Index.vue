@@ -3,12 +3,13 @@ import ComponentList from './components/ComponentList.vue'
 import useStore from '@/store'
 import LText from '@/components/LText.vue'
 import { defineComponent } from 'vue'
-
+import EditorWrapper from './components/EditorWrapper.vue'
 export default defineComponent({
   name: 'Editor',
   components: {
     LText,
-    ComponentList
+    ComponentList,
+    EditorWrapper
   },
   setup() {
     const { editor } = useStore()
@@ -16,9 +17,14 @@ export default defineComponent({
       // console.log('哈哈')
       editor.addComponent(item)
     }
+
+    const setActive = (id: string) => {
+      editor.setActive(id)
+    }
     return {
       editor,
-      onItemClick
+      onItemClick,
+      setActive
     }
   }
 })
@@ -37,12 +43,15 @@ export default defineComponent({
         <a-layout-content class="preview-container">
           <p>画布区域</p>
           <div class="preview-list" id="canvas-area">
-            <component
-              v-for="item in editor.components"
+            <EditorWrapper
+              :id="item.id"
               :key="item.id"
-              :is="item.name"
-              v-bind="item.props"
-            ></component>
+              v-for="item in editor.components"
+              @setActive="setActive"
+              :active="item.id === editor.currentId"
+            >
+              <component :is="item.name" v-bind="item.props"></component>
+            </EditorWrapper>
           </div>
         </a-layout-content>
       </a-layout>
@@ -52,6 +61,9 @@ export default defineComponent({
         class="settings-panel"
       >
         组件属性
+        <pre>
+          {{ editor.currentElement?.props }}
+        </pre>
       </a-layout-sider>
     </a-layout>
   </div>

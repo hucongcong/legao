@@ -51,7 +51,7 @@ export default defineStore('editor', {
     return {
       money: 100,
       components: testComponents,
-      currentElement: ''
+      currentId: ''
     }
   },
   actions: {
@@ -61,6 +61,14 @@ export default defineStore('editor', {
         name: 'l-text',
         props: payload
       })
+    },
+    setActive(id: string) {
+      this.currentId = id
+    }
+  },
+  getters: {
+    currentElement(): ComponentData | null {
+      return this.components.find((item) => item.id === this.currentId) || null
     }
   }
 })
