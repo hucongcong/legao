@@ -29,9 +29,6 @@ const finalProps = computed(() => {
 
 <template>
   <div class="props-table">
-    <pre>
-      {{ finalProps }}
-    </pre>
     <div v-for="(item, index) in finalProps" :key="index" class="prop-item">
       <template v-if="item">
         <span class="label" v-if="item.label">{{ item.label }}</span>

@@ -9,7 +9,7 @@ export default function useComponentCommon(
   const styleProps = computed(() => pick(props, picks))
   const handleClick = function () {
     if (props.actionType === 'url' && props.url) {
-      window.location.href = props.url
+      // window.location.href = props.url
     }
   }
   return {

@@ -61,12 +61,14 @@ export default defineComponent({
         width="300"
         style="background: #fff"
         class="settings-panel"
-        v-if="editor.currentElement"
       >
         <h3>组件属性</h3>
-        <PropsTable :props="editor.currentElement.props"></PropsTable>
+        <PropsTable
+          v-if="editor.currentElement"
+          :props="editor.currentElement.props"
+        ></PropsTable>
         <pre>
-          {{ editor.currentElement.props }}
+          {{ editor.currentElement?.props }}
         </pre>
       </a-layout-sider>
     </a-layout>
