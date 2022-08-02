@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
+import { TextComponentProps } from '@/config/defaultProps'
 export interface ComponentData {
   // 这个元素的 属性，属性请详见下面
-  props: { [key: string]: any }
+  props: Partial<TextComponentProps>
   // id，uuid v4 生成
   id: string
   name: 'l-text' | 'l-image'
@@ -45,18 +46,21 @@ export const testComponents: ComponentData[] = [
   }
 ]
 
-interface EditorState {
-  money: number
-  components: ComponentData[]
-  currentElement: string
-}
-
-export default defineStore<string, EditorState>('editor', {
+export default defineStore('editor', {
   state: () => {
     return {
       money: 100,
       components: testComponents,
       currentElement: ''
+    }
+  },
+  actions: {
+    addComponent(payload: Partial<TextComponentProps>) {
+      this.components.push({
+        id: uuidv4(),
+        name: 'l-text',
+        props: payload
+      })
     }
   }
 })

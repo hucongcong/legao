@@ -12,8 +12,13 @@ export default defineComponent({
   },
   setup() {
     const { editor } = useStore()
+    const onItemClick = (item: any) => {
+      // console.log('哈哈')
+      editor.addComponent(item)
+    }
     return {
-      editor
+      editor,
+      onItemClick
     }
   }
 })
@@ -25,7 +30,7 @@ export default defineComponent({
       <a-layout-sider width="300" style="background: #fff">
         <div class="sidebar-container">组件列表</div>
         <div>
-          <ComponentList></ComponentList>
+          <ComponentList @onItemClick="onItemClick"></ComponentList>
         </div>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">

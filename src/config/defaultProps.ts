@@ -84,9 +84,7 @@ export const textDefaultProps: TextComponentProps = {
 }
 
 // 封装函数，将默认值转换成组件的props结构
-export const transfromToComponentProps = <T extends { [key: string]: any }>(
-  props: T
-) => {
+export const transfromToComponentProps = (props: TextComponentProps) => {
   return mapValues(props, (item) => {
     return {
       type: item.constructor,

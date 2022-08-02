@@ -2,7 +2,8 @@
 import LText from '@/components/LText.vue'
 import { defineComponent } from 'vue'
 import useStore from '@/store'
-import { ComponentData } from '@/store/modules/editor'
+import { defaultTextTemplates } from '@/config/defaultTemplates'
+import { TextComponentProps } from '@/config/defaultProps'
 export default defineComponent({
   name: 'ComponentList',
   components: {
@@ -11,14 +12,13 @@ export default defineComponent({
   emits: ['onItemClick'],
   setup(props, context) {
     const { editor } = useStore()
-    const onItemClick = (item: ComponentData) => {
-      console.log('item click ...', item)
-      // 组件自己不处理，交给编辑器处理
-      context.emit
+    const onItemClick = (item: Partial<TextComponentProps>) => {
+      context.emit('onItemClick', item)
     }
     return {
       components: editor.components,
-      onItemClick
+      onItemClick,
+      defaultTextTemplates
     }
   }
 })
@@ -26,8 +26,13 @@ export default defineComponent({
 
 <template>
   <div>
-    <div v-for="item in components" :key="item.id" @click="onItemClick(item)">
-      <component :is="item.name" v-bind="item.props"></component>
+    <!-- 左侧组件列表 -->
+    <div
+      v-for="(item, index) in defaultTextTemplates"
+      :key="index"
+      @click="onItemClick(item)"
+    >
+      <l-text v-bind="item"></l-text>
     </div>
   </div>
 </template>
