@@ -4,12 +4,14 @@ import useStore from '@/store'
 import LText from '@/components/LText.vue'
 import { defineComponent } from 'vue'
 import EditorWrapper from './components/EditorWrapper.vue'
+import PropsTable from './components/PropsTable.vue'
 export default defineComponent({
   name: 'Editor',
   components: {
     LText,
     ComponentList,
-    EditorWrapper
+    EditorWrapper,
+    PropsTable
   },
   setup() {
     const { editor } = useStore()
@@ -59,10 +61,12 @@ export default defineComponent({
         width="300"
         style="background: #fff"
         class="settings-panel"
+        v-if="editor.currentElement"
       >
-        组件属性
+        <h3>组件属性</h3>
+        <PropsTable :props="editor.currentElement.props"></PropsTable>
         <pre>
-          {{ editor.currentElement?.props }}
+          {{ editor.currentElement.props }}
         </pre>
       </a-layout-sider>
     </a-layout>
@@ -92,5 +96,9 @@ export default defineComponent({
   position: fixed;
   margin-top: 50px;
   max-height: 80vh;
+}
+
+.settings-panel {
+  padding: 10px;
 }
 </style>
