@@ -46,4 +46,8 @@ export default defineComponent({
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.l-text {
+  width: 100%;
+}
+</style>

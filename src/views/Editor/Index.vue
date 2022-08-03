@@ -58,7 +58,7 @@ export default defineComponent({
         </a-layout-content>
       </a-layout>
       <a-layout-sider
-        width="300"
+        width="400"
         style="background: #fff"
         class="settings-panel"
       >

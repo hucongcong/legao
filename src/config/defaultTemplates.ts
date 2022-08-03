@@ -4,7 +4,9 @@ export const defaultTextTemplates = [
     fontSize: '30px',
     fontWeight: 'bold',
     tag: 'h2',
-    lineHeight: '1.5'
+    lineHeight: '1.5',
+    textAlign: 'center',
+    fontFamily: '宋体'
   },
   {
     text: '正文内容',

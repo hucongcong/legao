@@ -6,6 +6,10 @@ const props = defineProps<{
   props: Partial<TextComponentProps>
 }>()
 
+const emit = defineEmits<{
+  (e: 'change', value: string): void
+}>()
+
 // 将属性转换成antd的组件
 // 比如： {text: ’abc'} 转换成 {text: {component: 'a-input', value: 'abc'}}
 // 需要考虑的点：不是所有的属性都会进行转换，需要转换的属性会在 propsMap中定义
@@ -15,11 +19,13 @@ const finalProps = computed(() => {
     const k = key as keyof TextComponentProps
     if (propsToForms[k]) {
       // 如果在propsToForms中存在
+      const item = propsToForms[k]!
       finalProps[k] = {
-        value: props.props[k],
-        component: propsToForms[k]!.component,
-        label: propsToForms[k]!.label,
-        ...propsToForms[k]
+        value: item.initialTransform
+          ? item.initialTransform(props.props[k])
+          : props.props[k],
+        valueProp: item.valueProp ? item.valueProp : 'value',
+        ...item
       }
     }
   }
@@ -37,7 +43,19 @@ const finalProps = computed(() => {
             :is="item.component"
             :value="item.value"
             v-bind="item.extraProps"
-          ></component>
+            :[item.valueProp!]="item.value"
+          >
+            <template v-if="item.options">
+              <component
+                :is="item.subComponent"
+                v-for="sub in item.options"
+                :value="sub.value"
+                :key="sub.value"
+              >
+                {{ sub.label }}
+              </component>
+            </template>
+          </component>
         </div>
       </template>
     </div>
